@@ -1,6 +1,4 @@
-﻿
-using DefaultNamespace;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
@@ -8,9 +6,7 @@ public class MovementController : MonoBehaviour
 	public float acceleration = 0.02f;
 	private const float GRAVITY = 0.01f;
 	public bool isGrounded = false;
-	Collider2D[] overalppingColliders = new Collider2D[10];
 	private BoxCollider2D collider;
-
 
 	private void Awake()
 	{
@@ -32,37 +28,17 @@ public class MovementController : MonoBehaviour
 
 	private void Move()
 	{
-
 		Vector2 postion = transform.position;
 		postion += speed * Time.deltaTime * 60f;
 		transform.position = postion;
-
-
+		
 		FireRaycast();
-//		int numOfCollisions = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), overalppingColliders);
-//		if (numOfCollisions > 0)
-//		{
-//			ColliderDistance2D cd2 = GetComponent<Collider2D>().Distance(overalppingColliders[0]);
-//			transform.position = transform.position - (Vector3)(cd2.normal*cd2.distance);
-//			transform.position = transform.position - (Vector3)GetComponent<Collider2D>().Distance(overalppingColliders[0]).normal;
-//			Debug.Log("Distance is "+ GetComponent<Collider2D>().Distance(overalppingColliders[0]).distance );
-//			Debug.Log("Normal is "+ GetComponent<Collider2D>().Distance(overalppingColliders[0]).normal.magnitude );
-//			
-//			OnCollisionEnter2D(overalppingColliders[0]);
-////isGrounded
-////			for (int i = 0; i < numOfCollisions; i++)
-////			{
-////				GetComponent<Collider2D>().overalppingColliders[i]
-////			}
-//		}
-//		else
-//		{
-//			isGrounded = false;
-//		}
 	}
 
 	private void FireRaycast()
 	{
+		
+//		int numOfCollisions = GetComponent<Collider2D>().OverlapCollider(new ContactFilter2D(), overalppingColliders);
 		RaycastSides();
 		RaycastDown();
 	}
@@ -83,8 +59,6 @@ public class MovementController : MonoBehaviour
 		hit = Physics2D.Raycast(raycastOrigin, Vector2.left, collider.size.x / 2f);
 		CheckIfCollidingHorizontal(hit, Vector2.left);
 	}
-	
-	
 	
 	private void CheckIfCollidingHorizontal(RaycastHit2D hit, Vector2 raycastDirection)
 	{
@@ -193,25 +167,4 @@ public class MovementController : MonoBehaviour
 	{
 		return Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
 	}
-
-
-	private void OnCollisionEnter2D(Collider2D other)
-	{
-		Debug.Log("Collided with "+other.gameObject.tag);
-		if (other.gameObject.CompareTag("Ground"))
-		{
-			isGrounded = true;
-			speed.y = 0;
-		}
-	}
-//	private void OnTriggerEnter2D(Collider2D other)
-//	{
-//		Debug.Log("trigger entered "+other.gameObject.tag);
-//	}
-
-
-//	public override void OnCollision2D(Collider2D other)
-//	{
-//		Debug.Log("WAAAW Collided with "+other.gameObject.tag);
-//	}
 }
